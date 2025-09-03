@@ -31,5 +31,30 @@
             echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
             echo '</ul>';
         ?>
+
+        <!-- EJERCICIO 2 -->
+        <h2>Ejercicio 2</h2>
+        <?php
+            echo '<h4>Respuesta:</h4>';   
+
+            $a = "ManejadorSQL";
+            $b = 'MySQL';
+            $c = &$a;  // <-- Hasta aquí cumples con el inicio
+            echo "a) Valores iniciales:<br>";          // <-- Inciso a)
+            echo "<li>a = $a, b = $b, c = $c </li><br>";
+
+            $a = "PHP server"; // <-- Inciso b)
+            $b = &$a;
+
+
+            echo "c) Se vuelve a mostrar el contenido de cada uno:<br>";       // <-- Inciso c)
+            echo "<li>a = $a, b = $b, c = $c </li>";
+
+            echo "<p><strong>d)Explicación:</strong></p>"; 
+            echo "<p><li>Como usamos referencias (&), al reasignar \$a y \$b, ambos apuntan al mismo valor y \$c sigue enlazado a \$a.</li></p>"; 
+            // <-- Inciso d)
+        ?>
+
+
     </body>
 </html>
