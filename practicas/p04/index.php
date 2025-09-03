@@ -36,7 +36,6 @@
         <h2>Ejercicio 2</h2>
         <?php
             echo '<h4>Respuesta:</h4>';   
-
             $a = "ManejadorSQL";
             $b = 'MySQL';
             $c = &$a;  // <-- Hasta aquí cumples con el inicio
@@ -54,7 +53,22 @@
             echo "<p><li>Como usamos referencias (&), al reasignar \$a y \$b, ambos apuntan al mismo valor y \$c sigue enlazado a \$a.</li></p>"; 
             // <-- Inciso d)
         ?>
-
+        <!-- EJERCICIO 3 -->
+        <h2>Ejercicio 3</h2>
+        <?php
+            echo "<h4>Respuesta:</h4>"; 
+            $a = "PHP5";
+            $z[] = &$a;
+            $b = "5a version de PHP";
+            $c = (int)$b * 10;   // fuerza conversión a entero
+            $a .= $b;       // concatena
+            $b *= $c;       // multiplica
+            $z[0] = "MySQL";
+            echo "<pre>";
+            var_dump($a,$b,$c,$z);
+            echo "</pre>";
+            unset($a,$b,$c,$z);
+        ?>
 
     </body>
 </html>
