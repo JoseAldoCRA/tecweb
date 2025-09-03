@@ -103,27 +103,29 @@
             echo "</ul>";
         ?>
 
-        <!-- EJERCICIO 6 -->
         <h2>Ejercicio 6</h2>
+        <p>Dar y comprobar el valor booleano de las variables $a, $b, $c, $d, $e y $f usando <code>var_dump()</code>:</p>
+
         <?php
-            echo "<h4>Respuesta:</h4>";
-            echo "<ul>";
-            $a = "0"; // string con el carácter "0"
-            $b = "TRUE";  // string con el texto "TRUE"
-            $c = FALSE; // booleano falso
+            $a = "0";
+            $b = "TRUE";
+            $c = FALSE;
             $d = ($a OR $b);
             $e = ($a AND $c);
             $f = ($a XOR $b);
 
-            echo "<pre>";
-            var_dump($a,$b,$c,$d,$e,$f);
-            echo "</pre>";
+            echo "<h3>Valores con var_dump()</h3>";
+            echo "<p>\$a = "; var_dump($a); echo "</p>";
+            echo "<p>\$b = "; var_dump($b); echo "</p>";
+            echo "<p>\$c = "; var_dump($c); echo "</p>";
+            echo "<p>\$d = "; var_dump($d); echo "</p>";
+            echo "<p>\$e = "; var_dump($e); echo "</p>";
+            echo "<p>\$f = "; var_dump($f); echo "</p>";
 
-            echo "<li>Transformar booleanos para mostrar con echo:</li><br>";
-            echo "c = ".intval($c)."<br>";
-            echo "e = ".intval($e)."<br>";
-            unset($a,$b,$c,$d,$e,$f);
-            echo "</ul>"
+            // Transformar booleanos a texto con var_export o intval
+            echo "<h3>Mostrar booleanos con echo</h3>";
+            echo "<p>Valor de \$c con echo: " . var_export($c, true) . "</p>";
+            echo "<p>Valor de \$e con echo: " . var_export($e, true) . "</p>";
         ?>
         <!-- EJERCICIO 7 -->
         <h2>Ejercicio 7</h2>
@@ -133,6 +135,6 @@
             echo "b) Sistema Operativo del servidor: ".PHP_OS."<br>";
             echo "c) Idioma del navegador: ".$_SERVER['HTTP_ACCEPT_LANGUAGE']."<br>";
             echo "</ul>";
-        ?>
+        ?>  
     </body>
 </html>
