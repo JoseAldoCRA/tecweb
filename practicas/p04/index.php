@@ -36,6 +36,7 @@
         <h2>Ejercicio 2</h2>
         <?php
             echo '<h4>Respuesta:</h4>';   
+            echo "<ul>";
             $a = "ManejadorSQL";
             $b = 'MySQL';
             $c = &$a;  // <-- Hasta aquí cumples con el inicio
@@ -52,11 +53,13 @@
             echo "<p><strong>d)Explicación:</strong></p>"; 
             echo "<p><li>Como usamos referencias (&), al reasignar \$a y \$b, ambos apuntan al mismo valor y \$c sigue enlazado a \$a.</li></p>"; 
             // <-- Inciso d)
+            echo "</ul>";
         ?>
         <!-- EJERCICIO 3 -->
         <h2>Ejercicio 3</h2>
         <?php
             echo "<h4>Respuesta:</h4>"; 
+            echo "<ul>";
             $a = "PHP5";
             $z[] = &$a;
             $b = "5a version de PHP";
@@ -68,21 +71,27 @@
             var_dump($a,$b,$c,$z);
             echo "</pre>";
             unset($a,$b,$c,$z);
+            echo "</ul>";
         ?>
 
         <!-- EJERCICIO 4 -->
         <h2>Ejercicio 4</h2>
         <?php
+            echo "<h4>Respuesta:</h4>";
+            echo "<ul>";
             $GLOBALS['a'] = "Valor con GLOBALS";
             $GLOBALS['b'] = 2025;
             echo "a = ".$GLOBALS['a']."<br>";
             echo "b = ".$GLOBALS['b']."<br>";
             unset($GLOBALS['a'],$GLOBALS['b']);
+            echo "</ul>";
         ?>
 
         <!-- EJERCICIO 5 -->
         <h2>Ejercicio 5</h2>
         <?php
+            echo "<h4>Respuesta:</h4>";
+            echo "<ul>";
             $a = "7 personas";
             $b = (integer) $a;
             $a = "9E3"; 
@@ -91,6 +100,31 @@
             var_dump($a,$b,$c);
             echo "</pre>";
             unset($a,$b,$c);
+            echo "</ul>";
         ?>
+
+        <!-- EJERCICIO 6 -->
+        <h2>Ejercicio 6</h2>
+        <?php
+            echo "<h4>Respuesta:</h4>";
+            echo "<ul>";
+            $a = "0"; // string con el carácter "0"
+            $b = "TRUE";  // string con el texto "TRUE"
+            $c = FALSE; // booleano falso
+            $d = ($a OR $b);
+            $e = ($a AND $c);
+            $f = ($a XOR $b);
+
+            echo "<pre>";
+            var_dump($a,$b,$c,$d,$e,$f);
+            echo "</pre>";
+
+            echo "<li>Transformar booleanos para mostrar con echo:</li><br>";
+            echo "c = ".intval($c)."<br>";
+            echo "e = ".intval($e)."<br>";
+            unset($a,$b,$c,$d,$e,$f);
+            echo "</ul>"
+        ?>
+
     </body>
 </html>
