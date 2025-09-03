@@ -125,6 +125,14 @@
             unset($a,$b,$c,$d,$e,$f);
             echo "</ul>"
         ?>
-
+        <!-- EJERCICIO 7 -->
+        <h2>Ejercicio 7</h2>
+        <?php
+            echo "<ul>";
+            echo "a) Versión de Apache/PHP: ".$_SERVER['SERVER_SOFTWARE']."<br>";
+            echo "b) Sistema Operativo del servidor: ".PHP_OS."<br>";
+            echo "c) Idioma del navegador: ".$_SERVER['HTTP_ACCEPT_LANGUAGE']."<br>";
+            echo "</ul>";
+        ?>
     </body>
 </html>
