@@ -70,5 +70,15 @@
             unset($a,$b,$c,$z);
         ?>
 
+         <!-- EJERCICIO 4 -->
+        <h2>Ejercicio 4</h2>
+        <?php
+            $GLOBALS['a'] = "Valor con GLOBALS";
+            $GLOBALS['b'] = 2025;
+            echo "a = ".$GLOBALS['a']."<br>";
+            echo "b = ".$GLOBALS['b']."<br>";
+            unset($GLOBALS['a'],$GLOBALS['b']);
+        ?>
+
     </body>
 </html>
