@@ -70,7 +70,7 @@
             unset($a,$b,$c,$z);
         ?>
 
-         <!-- EJERCICIO 4 -->
+        <!-- EJERCICIO 4 -->
         <h2>Ejercicio 4</h2>
         <?php
             $GLOBALS['a'] = "Valor con GLOBALS";
@@ -80,5 +80,17 @@
             unset($GLOBALS['a'],$GLOBALS['b']);
         ?>
 
+        <!-- EJERCICIO 5 -->
+        <h2>Ejercicio 5</h2>
+        <?php
+            $a = "7 personas";
+            $b = (integer) $a;
+            $a = "9E3"; 
+            $c = (double) $a;
+            echo "<pre>";
+            var_dump($a,$b,$c);
+            echo "</pre>";
+            unset($a,$b,$c);
+        ?>
     </body>
 </html>
