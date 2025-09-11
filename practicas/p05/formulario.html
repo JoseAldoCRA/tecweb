@@ -18,39 +18,64 @@
     <h2>Información de Participación</h2>
 
     <form action="http://52.43.117.247/neo/classroom/tw/concurso.php" method="post">
-    <p>Información personal</p>
-      <ul>
-      <li>Nombre: <input type="text" name="name"></li>
-      <li>Dirección de E-mail: <input type="email" name="email"></li>
-      <li>Número Telefónico: <input type="phone" name="phone"></li>
-      <li>Mis tenis son tan feos porque...<br>
-      <textarea name="..." rows="4" cols="60" maxlength="..." placeholder="No mas de 300 caracteres de longitud"></textarea></li>
-      </ul>
+        
+        <fieldset>
+            <legend>Información Personal</legend>
+            <ul>
+            <li>Nombre: <input type="text" name="name"></li>
+            <li>Dirección de E-mail: <input type="email" name="email"></li>
+            <li>Número Telefónico: <input type="phone" name="phone"></li>
+            <li>Mis tenis son tan feos porque...<br>
+            <textarea name="..." rows="4" cols="60" maxlength="..." placeholder="No mas de 300 caracteres de longitud"></textarea></li>
+            </ul>
+
+        </fieldset>
 
 
-      <h2>Diseña tus Mike personalizados:</h2>
-  
-      <p>Diseño personalizado del Tenis</p>
-  
-      <p>Color <em>(escoge uno)</em>:</p>
-        <ul>
-        <li><input type="radio" name="color" value="red">Rojo</li>
-        <li><input type="radio" name="color" value="azul">Azul</li>
-        <li><input type="radio" name="color" value="Negro">Negro</li>
-        <li><input type="radio" name="color" value="Plateado">Plateado</li>
-        </ul>
-  
-      <p>Características <em>(escoge tantas como quieras)</em>:</p>
-        <ul>
-        <li><input type="checkbox" name="feactures[]" value="laces"> Cordones brillantes</li>
-        <li><input type="checkbox" name="feactures[]" value="metal-logo"> Logo metálico</li>
-        <li><input type="checkbox" name="feactures[]" value="light-sole"> Suela luminosa</li>
-        <li><input type="checkbox" name="feactures[]" value="wifi"> WiFi integrado</li>
-        </ul>
-  
-      <p>Talla</p>
-      <p>Las medidas reflejan el estándar masculino:</p>
-      
+        <h2>Diseña tus Mike personalizados:</h2>
+    
+        <fieldset>
+
+            <legend>Diseño personalizado del Tenis</legend>
+            
+            <fieldset>
+                <legend>Color <em>(escoge uno)</em>:</legend>
+                <ul>
+                <li><input type="radio" name="color" value="red">Rojo</li>
+                <li><input type="radio" name="color" value="azul">Azul</li>
+                <li><input type="radio" name="color" value="Negro">Negro</li>
+                <li><input type="radio" name="color" value="Plateado">Plateado</li>
+                </ul>
+            </fieldset>
+        
+            <fieldset>
+                <legend>Características <em>(escoge tantas como quieras)</em>:</legend>
+                <ul>
+                <li><input type="checkbox" name="feactures[]" value="laces"> Cordones brillantes</li>
+                <li><input type="checkbox" name="feactures[]" value="metal-logo"> Logo metálico</li>
+                <li><input type="checkbox" name="feactures[]" value="light-sole"> Suela luminosa</li>
+                <li><input type="checkbox" name="feactures[]" value="wifi"> WiFi integrado</li>
+                </ul>
+            </fieldset>
+        
+            <fieldset>
+                <legend>Talla</legend>
+                <p>Las medidas reflejan el estándar masculino: <select name="size">
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                </select>
+                </p>
+            </fieldset>
+            
+        </fieldset>
+
       <p><input type="submit" value="¡Chidos mis tenis!">
       <input type="reset" value="Limpiar"></p>
     </form>
