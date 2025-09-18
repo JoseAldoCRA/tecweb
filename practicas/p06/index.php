@@ -34,6 +34,12 @@
         }
     ?>
 
+    <h2>Ejercicio 4</h2>
+    <p>Arreglo con índices 97–122 y valores de la 'a' a la 'z'.</p>
+    <?php
+        echo arregloAscii();
+    ?>
+
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">
         Name: <input type="text" name="name"><br>

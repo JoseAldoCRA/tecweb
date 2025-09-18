@@ -52,5 +52,23 @@ function buscarMultiploDoWhile($m) {
     } while ($num % $m != 0);
     return $num;
 }
+
+// Ejercicio 4: arreglo ASCII [97-122] con foreach
+function arregloAscii() {
+    $arr = [];
+    for ($i = 97; $i <= 122; $i++) {
+        $arr[$i] = chr($i);
+    }
+
+    $salida = "<h3>Tabla ASCII de letras a-z:</h3>";
+    $salida .= "<table border='1' cellpadding='5'>";
+    $salida .= "<tr><th>Índice</th><th>Letra</th></tr>";
+    foreach ($arr as $key => $value) {
+        $salida .= "<tr><td>$key</td><td>$value</td></tr>";
+    }
+    $salida .= "</table>";
+
+    return $salida;
+}
 ?>
 
