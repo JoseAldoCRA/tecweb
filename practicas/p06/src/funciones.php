@@ -79,5 +79,116 @@ function validarEdadSexo($edad, $sexo) {
         return "<h3>Lo sentimos, no cumple con los requisitos.</h3>";
     }
 }
+
+
+// ====================
+// Ejercicio 6
+function parqueVehicular() {
+    return [
+        "ABC1234" => [
+            "Auto" => ["marca"=>"HONDA","modelo"=>2020,"tipo"=>"camioneta"],
+            "Propietario" => ["nombre"=>"Juan Pérez","ciudad"=>"Puebla, Pue.","direccion"=>"Av. Reforma 123"]
+        ],
+        "XYZ5678" => [
+            "Auto" => ["marca"=>"MAZDA","modelo"=>2019,"tipo"=>"sedan"],
+            "Propietario" => ["nombre"=>"Ana López","ciudad"=>"CDMX","direccion"=>"Col. Roma 45"]
+        ],
+        "LMN3456" => [
+            "Auto" => ["marca"=>"TOYOTA","modelo"=>2021,"tipo"=>"hachback"],
+            "Propietario" => ["nombre"=>"Carlos Gómez","ciudad"=>"Guadalajara, Jal.","direccion"=>"Av. Patria 678"]
+        ],
+        "QWE9876" => [
+            "Auto" => ["marca"=>"NISSAN","modelo"=>2018,"tipo"=>"sedan"],
+            "Propietario" => ["nombre"=>"María Fernández","ciudad"=>"Monterrey, NL","direccion"=>"Calle Hidalgo 321"]
+        ],
+        "JKL2468" => [
+            "Auto" => ["marca"=>"FORD","modelo"=>2022,"tipo"=>"camioneta"],
+            "Propietario" => ["nombre"=>"Luis Ramírez","ciudad"=>"Cancún, QR","direccion"=>"Zona Hotelera"]
+        ],
+        "RTY1357" => [
+            "Auto" => ["marca"=>"CHEVROLET","modelo"=>2020,"tipo"=>"hachback"],
+            "Propietario" => ["nombre"=>"Laura Martínez","ciudad"=>"Mérida, Yuc.","direccion"=>"Centro Histórico"]
+        ],
+        "POI1122" => [
+            "Auto" => ["marca"=>"KIA","modelo"=>2021,"tipo"=>"sedan"],
+            "Propietario" => ["nombre"=>"Pedro Hernández","ciudad"=>"León, Gto.","direccion"=>"Blvd. López Mateos"]
+        ],
+        "ASD3344" => [
+            "Auto" => ["marca"=>"HYUNDAI","modelo"=>2019,"tipo"=>"camioneta"],
+            "Propietario" => ["nombre"=>"Diana Torres","ciudad"=>"Tijuana, BC","direccion"=>"Col. Centro"]
+        ],
+        "FGH5566" => [
+            "Auto" => ["marca"=>"BMW","modelo"=>2022,"tipo"=>"sedan"],
+            "Propietario" => ["nombre"=>"José Castillo","ciudad"=>"Querétaro, Qro.","direccion"=>"Av. Zaragoza 88"]
+        ],
+        "ZXC7788" => [
+            "Auto" => ["marca"=>"AUDI","modelo"=>2021,"tipo"=>"hachback"],
+            "Propietario" => ["nombre"=>"Sofía Morales","ciudad"=>"Toluca, Edo. Méx.","direccion"=>"Col. Las Torres"]
+        ],
+        "BNM9900" => [
+            "Auto" => ["marca"=>"MERCEDES","modelo"=>2020,"tipo"=>"camioneta"],
+            "Propietario" => ["nombre"=>"Héctor Domínguez","ciudad"=>"Puebla, Pue.","direccion"=>"Av. Juárez 150"]
+        ],
+        "VBN2233" => [
+            "Auto" => ["marca"=>"VOLKSWAGEN","modelo"=>2018,"tipo"=>"sedan"],
+            "Propietario" => ["nombre"=>"Fernanda Ruiz","ciudad"=>"San Luis Potosí","direccion"=>"Calle Reforma"]
+        ],
+        "MKO4455" => [
+            "Auto" => ["marca"=>"SEAT","modelo"=>2019,"tipo"=>"hachback"],
+            "Propietario" => ["nombre"=>"Ricardo Sánchez","ciudad"=>"Oaxaca, Oax.","direccion"=>"Av. Universidad"]
+        ],
+        "PLK6677" => [
+            "Auto" => ["marca"=>"TESLA","modelo"=>2022,"tipo"=>"sedan"],
+            "Propietario" => ["nombre"=>"Valeria Chávez","ciudad"=>"CDMX","direccion"=>"Santa Fe"]
+        ],
+        "GHJ8899" => [
+            "Auto" => ["marca"=>"PEUGEOT","modelo"=>2021,"tipo"=>"camioneta"],
+            "Propietario" => ["nombre"=>"Andrés Flores","ciudad"=>"Guadalajara, Jal.","direccion"=>"Av. Chapultepec"]
+        ]
+    ];
+}
+
+// Mostrar un vehículo en tabla
+function mostrarVehiculo($matricula, $vehiculo) {
+    $html = "<h3>Vehículo con matrícula: $matricula</h3>";
+    $html .= "<table border='1' cellpadding='5'>
+                <tr><th>Matrícula</th><th>Marca</th><th>Modelo</th><th>Tipo</th>
+                <th>Propietario</th><th>Ciudad</th><th>Dirección</th></tr>";
+    $html .= "<tr>
+                <td>$matricula</td>
+                <td>{$vehiculo['Auto']['marca']}</td>
+                <td>{$vehiculo['Auto']['modelo']}</td>
+                <td>{$vehiculo['Auto']['tipo']}</td>
+                <td>{$vehiculo['Propietario']['nombre']}</td>
+                <td>{$vehiculo['Propietario']['ciudad']}</td>
+                <td>{$vehiculo['Propietario']['direccion']}</td>
+              </tr>";
+    $html .= "</table>";
+    return $html;
+}
+
+// Mostrar todos en tabla
+function mostrarTodosVehiculos($parque) {
+    $html = "<h3>Listado completo de autos</h3>";
+    $html .= "<table border='1' cellpadding='5'>
+                <tr><th>Matrícula</th><th>Marca</th><th>Modelo</th><th>Tipo</th>
+                <th>Propietario</th><th>Ciudad</th><th>Dirección</th></tr>";
+    foreach ($parque as $matricula => $vehiculo) {
+        $html .= "<tr>
+                    <td>$matricula</td>
+                    <td>{$vehiculo['Auto']['marca']}</td>
+                    <td>{$vehiculo['Auto']['modelo']}</td>
+                    <td>{$vehiculo['Auto']['tipo']}</td>
+                    <td>{$vehiculo['Propietario']['nombre']}</td>
+                    <td>{$vehiculo['Propietario']['ciudad']}</td>
+                    <td>{$vehiculo['Propietario']['direccion']}</td>
+                  </tr>";
+    }
+    $html .= "</table>";
+    return $html;
+}
+?>
+
+
 ?>
 

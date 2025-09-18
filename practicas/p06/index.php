@@ -60,6 +60,42 @@
         }
     ?>
 
+    <h2>Ejercicio 6</h2>
+    <p>Consulta de parque vehicular</p>
+    <form method="POST">
+        <label for="matricula">Consultar por matrícula:</label>
+        <input type="text" id="matricula" name="matricula" placeholder="Ej: ABC1234"><br><br>
+
+        <button type="submit" name="buscar">Buscar</button>
+        <button type="submit" name="todos">Ver todos</button>
+    </form>
+
+    <?php
+        $parque = parqueVehicular();
+
+        if (isset($_POST['buscar'])) {
+            $m = $_POST['matricula'];
+            if (isset($parque[$m])) {
+                echo "<h3>📌 Salida en tabla</h3>";
+                echo mostrarVehiculo($m, $parque[$m]);
+
+                echo "<h3>📌 Salida con print_r (estructura del arreglo)</h3>";
+                echo "<pre>"; print_r($parque[$m]); echo "</pre>";
+            } else {
+                echo "<p><b>No existe la matrícula ingresada.</b></p>";
+            }
+        }
+
+        if (isset($_POST['todos'])) {
+            echo "<h3>📌 Salida en tabla</h3>";
+            echo mostrarTodosVehiculos($parque);
+
+            echo "<h3>📌 Salida con print_r (estructura completa del arreglo)</h3>";
+            echo "<pre>"; print_r($parque); echo "</pre>";
+        }
+    ?>
+
+
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">
         Name: <input type="text" name="name"><br>
