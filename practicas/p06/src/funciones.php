@@ -70,5 +70,14 @@ function arregloAscii() {
 
     return $salida;
 }
+
+// Ejercicio 5
+function validarEdadSexo($edad, $sexo) {
+    if ($sexo === "femenino" && $edad >= 18 && $edad <= 35) {
+        return "<h3>Bienvenida, usted está en el rango de edad permitido.</h3>";
+    } else {
+        return "<h3>Lo sentimos, no cumple con los requisitos.</h3>";
+    }
+}
 ?>
 
