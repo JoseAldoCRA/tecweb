@@ -23,6 +23,16 @@
         echo generarSecuencia();
     ?>
 
+    <h2>Ejercicio 3</h2>
+    <p>Buscar el primer número aleatorio múltiplo de un número dado (GET).</p>
+    <p>Ejemplo de uso: <code>?m=7</code> en la URL.</p>
+    <?php
+        if (isset($_GET['m'])) {
+            $m = $_GET['m'];
+            echo "<p>Con while → " . buscarMultiploWhile($m) . "</p>";
+            echo "<p>Con do-while → " . buscarMultiploDoWhile($m) . "</p>";
+        }
+    ?>
 
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">

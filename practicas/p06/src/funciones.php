@@ -33,5 +33,24 @@ function generarSecuencia() {
 
     return $salida;
 }
+
+// Ejercicio 3: buscar primer múltiplo con while
+function buscarMultiploWhile($m) {
+    $num = 0;
+    while (true) {
+        $num = rand(1, 1000);
+        if ($num % $m == 0) {
+            return $num;
+        }
+    }
+}
+
+// Ejercicio 3: buscar primer múltiplo con do-while
+function buscarMultiploDoWhile($m) {
+    do {
+        $num = rand(1, 1000);
+    } while ($num % $m != 0);
+    return $num;
+}
 ?>
 
