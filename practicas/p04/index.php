@@ -79,11 +79,25 @@
         <?php
             echo "<h4>Respuesta:</h4>";
             echo "<ul>";
-            $GLOBALS['a'] = "Valor con GLOBALS";
-            $GLOBALS['b'] = 2025;
-            echo "a = ".$GLOBALS['a']."<br>";
-            echo "b = ".$GLOBALS['b']."<br>";
-            unset($GLOBALS['a'],$GLOBALS['b']);
+
+            $a = "PHP";
+            $b = 2025;
+
+            function mostrarGlobales() {
+                echo "<li>Usando \$GLOBALS:</li>";
+                echo "a = " . $GLOBALS['a'] . "<br />";
+                echo "b = " . $GLOBALS['b'] . "<br />";
+            }
+            mostrarGlobales();
+
+            function mostrarGlobalConGlobal() {
+                global $a, $b;
+                echo "<li>Usando 'global':</li>";
+                echo "a = $a<br />";
+                echo "b = $b<br />";
+            }
+            mostrarGlobalConGlobal();
+
             echo "</ul>";
         ?>
 
@@ -92,17 +106,20 @@
         <?php
             echo "<h4>Respuesta:</h4>";
             echo "<ul>";
+
             $a = "7 personas";
             $b = (integer) $a;
             $a = "9E3"; 
             $c = (double) $a;
-            echo "<pre>";
-            var_dump($a,$b,$c);
-            echo "</pre>";
-            unset($a,$b,$c);
+
+            echo "<li>Valor final de \$a: $a (tipo: " . gettype($a) . ")</li>";
+            echo "<li>Valor final de \$b: $b (tipo: " . gettype($b) . ")</li>";
+            echo "<li>Valor final de \$c: $c (tipo: " . gettype($c) . ")</li>";
+
             echo "</ul>";
         ?>
 
+        
         <h2>Ejercicio 6</h2>
         <p>Dar y comprobar el valor booleano de las variables $a, $b, $c, $d, $e y $f usando <code>var_dump()</code>:</p>
 
