@@ -33,10 +33,17 @@ $result = $link->query($sql_check);
 if ($result && $result->num_rows > 0) {
     echo '<h2>⚠️ Error: El producto ya existe en la base de datos.</h2>';
 } else {
-    // Insertar nuevo producto (con campo eliminado = 0)
+    // --- Query anterior (comentada) ---
+    // $sql_insert = "INSERT INTO productos 
+    //     (id, nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado)
+    //     VALUES (NULL, '$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen', 0)";
+
+    // --- Nueva query usando sólo los nombres de columna necesarios ---
+    // Nota: 'id' se genera automáticamente (AUTO_INCREMENT)
+    // y 'eliminado' usa el valor por defecto definido en la tabla (0)
     $sql_insert = "INSERT INTO productos 
-        (id, nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado)
-        VALUES (NULL, '$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen', 0)";
+        (nombre, marca, modelo, precio, detalles, unidades, imagen)
+        VALUES ('$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen')";
 
     if ($link->query($sql_insert)) {
         echo '<h2>✅ Producto insertado correctamente</h2>';
