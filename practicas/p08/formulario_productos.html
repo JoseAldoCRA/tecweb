@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Productos</title>
+</head>
+<body>
+  <h2>Registrar nuevo producto</h2>
+  <form action="http://localhost/tecweb/practicas/p08/set_producto_v2.php" method="post">
+    <label>Nombre:</label><br>
+    <input type="text" name="nombre" required><br><br>
+
+    <label>Marca:</label><br>
+    <input type="text" name="marca" required><br><br>
+
+    <label>Modelo:</label><br>
+    <input type="text" name="modelo" required><br><br>
+
+    <label>Precio:</label><br>
+    <input type="number" step="0.01" name="precio" required><br><br>
+
+    <label>Detalles:</label><br>
+    <input type="text" name="detalles" required><br><br>
+
+    <label>Unidades:</label><br>
+    <input type="number" name="unidades" required><br><br>
+
+    <label>Imagen:</label><br>
+    <input type="text" name="imagen" value="img/default.png"><br><br>
+
+    <input type="submit" value="Guardar Producto">
+  </form>
+</body>
+</html>
