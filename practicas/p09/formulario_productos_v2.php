@@ -37,7 +37,7 @@
 
     <label>Modelo:</label><br>
     <input type="text" id="modelo" name="modelo" value="<?= !empty($_POST['modelo']) ? $_POST['modelo'] : '' ?>"><br>
-    <span class="error" id="errorModelo">El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos.</span><br>
+    <span class="error" id="errorModelo">El modelo es requerido, debe ser alfanumérico (puede incluir espacios) y tener 25 caracteres o menos.</span><br>
 
     <label>Precio:</label><br>
     <input type="number" step="0.01" id="precio" name="precio" value="<?= !empty($_POST['precio']) ? $_POST['precio'] : '' ?>"><br>
@@ -84,9 +84,9 @@
         valido = false;
       }
       
-      // Validar MODELO: requerido, alfanumérico y <= 25 caracteres
+      // Validar MODELO: requerido, alfanumérico (puede incluir espacios) y <= 25 caracteres
       var modelo = document.getElementById('modelo').value.trim();
-      var alfanumerico = /^[a-zA-Z0-9]+$/;
+      var alfanumerico = /^[a-zA-Z0-9\s]+$/;
       if (modelo === '' || !alfanumerico.test(modelo) || modelo.length > 25) {
         document.getElementById('errorModelo').style.display = 'block';
         valido = false;
