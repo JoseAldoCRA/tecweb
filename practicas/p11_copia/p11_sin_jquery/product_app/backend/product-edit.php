@@ -1,4 +1,7 @@
 <?php
+    // Evitar cualquier salida antes del JSON
+    error_reporting(0);
+    
     include_once __DIR__.'/database.php';
 
     // SE OBTIENE LA INFORMACIÓN DEL PRODUCTO ENVIADA POR EL CLIENTE
@@ -12,8 +15,7 @@
         // SE TRANSFORMA EL STRING DEL JSON A OBJETO
         $jsonOBJ = json_decode($producto);
         
-        // VALIDAR QUE EXISTE EL ID
-        if(isset($jsonOBJ->id)) {
+        if($jsonOBJ && isset($jsonOBJ->id)) {
             $conexion->set_charset("utf8");
             
             // SE ACTUALIZA EL PRODUCTO
@@ -31,16 +33,16 @@
                 $data['status'] = "success";
                 $data['message'] = "Producto actualizado correctamente";
             } else {
-                $data['message'] = "ERROR: No se ejecutó $sql. " . mysqli_error($conexion);
+                $data['message'] = "ERROR: No se ejecutó la actualización. " . mysqli_error($conexion);
             }
         } else {
-            $data['message'] = "No se recibió el ID del producto";
+            $data['message'] = "No se recibió el ID del producto o JSON inválido";
         }
         
-        // Cierra la conexión
         $conexion->close();
     }
 
-    // SE HACE LA CONVERSIÓN DE ARRAY A JSON
+    // Asegurar que se devuelva JSON válido
+    header('Content-Type: application/json');
     echo json_encode($data, JSON_PRETTY_PRINT);
 ?>

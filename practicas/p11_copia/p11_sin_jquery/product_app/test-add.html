@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Product Add</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <h1>Prueba de Product-Add</h1>
+    <button id="testBtn">Probar Agregar Producto</button>
+    <pre id="resultado"></pre>
+
+    <script>
+        $('#testBtn').click(function() {
+            let producto = {
+                nombre: "Producto Test",
+                marca: "Samsung",
+                modelo: "TEST-123",
+                precio: 199.99,
+                detalles: "Producto de prueba",
+                unidades: 10,
+                imagen: "img/default.png"
+            };
+
+            $.ajax({
+                url: './backend/product-add.php',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(producto),
+                success: function(response) {
+                    $('#resultado').text('SUCCESS:\n' + response);
+                    console.log('Respuesta:', response);
+                },
+                error: function(xhr, status, error) {
+                    $('#resultado').text('ERROR:\n' + xhr.responseText);
+                    console.error('Error:', xhr.responseText);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

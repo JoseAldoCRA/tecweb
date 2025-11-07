@@ -1,15 +1,17 @@
 <?php
+    error_reporting(0); // Agregar esta línea
+    
     $conexion = @mysqli_connect(
         'localhost',
         'root',
-        'Dyrco_CRA13',  // TU PASSWORD
+        'Dyrco_CRA13',
         'marketzone'
     );
 
-    /**
-     * NOTA: si la conexión falló $conexion contendrá false
-     **/
     if(!$conexion) {
-        die('¡Base de datos NO conectada!');
+        die(json_encode([
+            'status' => 'error',
+            'message' => '¡Base de datos NO conectada!'
+        ]));
     }
 ?>

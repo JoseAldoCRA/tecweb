@@ -1,17 +1,5 @@
-// JSON BASE A MOSTRAR EN FORMULARIO
-const baseJSON = {
-    "precio": 0.0,
-    "unidades": 1,
-    "modelo": "XX-000",
-    "marca": "NA",
-    "detalles": "NA",
-    "imagen": "img/default.png"
-};
-
 // CUANDO EL DOCUMENTO ESTÉ LISTO
 $(document).ready(function() {
-    init();
-    
     // Listar productos al cargar la página
     listarProductos();
     
@@ -32,13 +20,63 @@ $(document).ready(function() {
         }
     });
     
-    // Event listener para el formulario de agregar producto
-    $('#product-form').submit(function(e) {
-        e.preventDefault();
-        agregarProducto();
+    // VALIDACIONES EN TIEMPO REAL (onChange/onBlur)
+    
+    // Validar nombre cuando pierde el foco
+    $('#name').blur(function() {
+        validarNombre();
+        // Validar que no exista en BD (paso 7) - Comentado temporalmente para debugging
+        // validarNombreExistente();
     });
     
-    // Event delegation para el botón eliminar (porque los botones se crean dinámicamente)
+    // Validar marca cuando cambia
+    $('#marca').change(function() {
+        validarMarca();
+    });
+    
+    // Validar modelo cuando pierde el foco
+    $('#modelo').blur(function() {
+        validarModelo();
+    });
+    
+    // Validar precio cuando pierde el foco
+    $('#precio').blur(function() {
+        validarPrecio();
+    });
+    
+    // Validar detalles cuando pierde el foco
+    $('#detalles').blur(function() {
+        validarDetalles();
+    });
+    
+    // Validar unidades cuando pierde el foco
+    $('#unidades').blur(function() {
+        validarUnidades();
+    });
+    
+    // Event listener para el formulario de agregar/modificar producto
+    $('#product-form').submit(function(e) {
+        e.preventDefault();
+        
+        // Validar todos los campos antes de enviar
+        let nombreValido = validarNombre();
+        let marcaValida = validarMarca();
+        let modeloValido = validarModelo();
+        let precioValido = validarPrecio();
+        let detallesValidos = validarDetalles();
+        let unidadesValidas = validarUnidades();
+        
+        // Si todos los campos son válidos, proceder
+        if(nombreValido && marcaValida && modeloValido && precioValido && detallesValidos && unidadesValidas) {
+            agregarProducto();
+            // PASO 3: Cambiar texto del botón después de enviar
+            $('button.btn-primary').text("Agregar Producto");
+        } else {
+            alert('Por favor corrige los errores antes de continuar');
+        }
+    });
+    
+    // Event delegation para el botón eliminar
     $(document).on('click', '.product-delete', function() {
         if(confirm('¿De verdad deseas eliminar el Producto?')) {
             let productId = $(this).closest('tr').attr('productId');
@@ -46,9 +84,9 @@ $(document).ready(function() {
         }
     });
     
-    // Event delegation para el botón editar
-    $(document).on('click', '.product-edit', function() {
-        let row = $(this).closest('tr');
+    // PASO 2: Event delegation para editar producto
+    $(document).on('click', '.product-item', function(e) {
+        let row = $(this);
         let productId = row.attr('productId');
         let nombre = row.find('td:eq(1)').text();
         
@@ -58,31 +96,187 @@ $(document).ready(function() {
         let modelo = row.find('li:contains("modelo:")').text().replace('modelo: ', '');
         let marca = row.find('li:contains("marca:")').text().replace('marca: ', '');
         let detalles = row.find('li:contains("detalles:")').text().replace('detalles: ', '');
+        let imagen = row.find('li:contains("imagen:")').text().replace('imagen: ', '') || 'img/default.png';
         
         // Llenar el formulario con los datos
         $('#productId').val(productId);
         $('#name').val(nombre);
+        $('#marca').val(marca);
+        $('#modelo').val(modelo);
+        $('#precio').val(parseFloat(precio));
+        $('#detalles').val(detalles);
+        $('#unidades').val(parseInt(unidades));
+        $('#imagen').val(imagen);
         
-        let productoJSON = {
-            "precio": parseFloat(precio),
-            "unidades": parseInt(unidades),
-            "modelo": modelo,
-            "marca": marca,
-            "detalles": detalles,
-            "imagen": "img/default.png"
-        };
+        // PASO 2: Cambiar el texto del botón a "Modificar Producto"
+        $('button.btn-primary').text("Modificar Producto");
         
-        $('#description').val(JSON.stringify(productoJSON, null, 2));
-        
-        // Cambiar el texto del botón
-        $('#product-form button[type="submit"]').text('Actualizar Producto');
+        // Scroll al formulario
+        $('html, body').animate({
+            scrollTop: $('#product-form').offset().top - 100
+        }, 500);
     });
 });
 
-function init() {
-    let JsonString = JSON.stringify(baseJSON, null, 2);
-    $('#description').val(JsonString);
+// ========== FUNCIONES DE VALIDACIÓN (PASO 5) ==========
+
+function validarNombre() {
+    let nombre = $('#name').val().trim();
+    let valido = true;
+    let mensaje = '';
+    
+    if(nombre === '') {
+        valido = false;
+        mensaje = 'El nombre es requerido';
+    } else if(nombre.length > 100) {
+        valido = false;
+        mensaje = 'El nombre debe tener 100 caracteres o menos';
+    } else {
+        mensaje = '✓ Nombre válido';
+    }
+    
+    mostrarValidacion('name', valido, mensaje);
+    return valido;
 }
+
+// PASO 7: Validar que el nombre no exista en la BD
+function validarNombreExistente() {
+    // TEMPORALMENTE DESHABILITADO PARA DEBUGGING
+    return;
+    
+    let nombre = $('#name').val().trim();
+    let productId = $('#productId').val();
+    
+    if(nombre !== '') {
+        $.ajax({
+            url: './backend/product-validate-name.php',
+            type: 'POST',
+            data: JSON.stringify({ nombre: nombre, id: productId }),
+            contentType: 'application/json',
+            success: function(response) {
+                let respuesta = JSON.parse(response);
+                if(respuesta.exists) {
+                    mostrarValidacion('name', false, '⚠ Este nombre de producto ya existe');
+                } else {
+                    mostrarValidacion('name', true, '✓ Nombre disponible');
+                }
+            }
+        });
+    }
+}
+
+function validarMarca() {
+    let marca = $('#marca').val();
+    let valido = true;
+    let mensaje = '';
+    
+    if(marca === '') {
+        valido = false;
+        mensaje = 'Debes seleccionar una marca';
+    } else {
+        mensaje = '✓ Marca válida';
+    }
+    
+    mostrarValidacion('marca', valido, mensaje);
+    return valido;
+}
+
+function validarModelo() {
+    let modelo = $('#modelo').val().trim();
+    let valido = true;
+    let mensaje = '';
+    let alfanumerico = /^[a-zA-Z0-9\s\-]+$/;
+    
+    if(modelo === '') {
+        valido = false;
+        mensaje = 'El modelo es requerido';
+    } else if(!alfanumerico.test(modelo)) {
+        valido = false;
+        mensaje = 'El modelo debe ser alfanumérico (puede incluir guiones y espacios)';
+    } else if(modelo.length > 25) {
+        valido = false;
+        mensaje = 'El modelo debe tener 25 caracteres o menos';
+    } else {
+        mensaje = '✓ Modelo válido';
+    }
+    
+    mostrarValidacion('modelo', valido, mensaje);
+    return valido;
+}
+
+function validarPrecio() {
+    let precio = parseFloat($('#precio').val());
+    let valido = true;
+    let mensaje = '';
+    
+    if(isNaN(precio)) {
+        valido = false;
+        mensaje = 'El precio es requerido';
+    } else if(precio <= 99.99) {
+        valido = false;
+        mensaje = 'El precio debe ser mayor a 99.99';
+    } else {
+        mensaje = '✓ Precio válido';
+    }
+    
+    mostrarValidacion('precio', valido, mensaje);
+    return valido;
+}
+
+function validarDetalles() {
+    let detalles = $('#detalles').val().trim();
+    let valido = true;
+    let mensaje = '';
+    
+    if(detalles.length > 250) {
+        valido = false;
+        mensaje = 'Los detalles deben tener 250 caracteres o menos';
+    } else if(detalles.length > 0) {
+        mensaje = '✓ Detalles válidos';
+    } else {
+        mensaje = 'Opcional';
+    }
+    
+    mostrarValidacion('detalles', valido, mensaje);
+    return valido;
+}
+
+function validarUnidades() {
+    let unidades = parseInt($('#unidades').val());
+    let valido = true;
+    let mensaje = '';
+    
+    if(isNaN(unidades)) {
+        valido = false;
+        mensaje = 'Las unidades son requeridas';
+    } else if(unidades < 0) {
+        valido = false;
+        mensaje = 'Las unidades deben ser mayor o igual a 0';
+    } else {
+        mensaje = '✓ Unidades válidas';
+    }
+    
+    mostrarValidacion('unidades', valido, mensaje);
+    return valido;
+}
+
+// PASO 6: Mostrar validación en la barra de estado de cada campo
+function mostrarValidacion(campo, valido, mensaje) {
+    let $input = $('#' + campo);
+    let $mensaje = $('#' + campo + '-validation');
+    
+    if(valido) {
+        $input.removeClass('is-invalid').addClass('is-valid');
+        $mensaje.removeClass('invalid').addClass('valid');
+    } else {
+        $input.removeClass('is-valid').addClass('is-invalid');
+        $mensaje.removeClass('valid').addClass('invalid');
+    }
+    
+    $mensaje.text(mensaje);
+}
+
+// ========== FUNCIONES CRUD ==========
 
 // LISTAR TODOS LOS PRODUCTOS
 function listarProductos() {
@@ -102,16 +296,14 @@ function listarProductos() {
                     descripcion += '<li>modelo: ' + producto.modelo + '</li>';
                     descripcion += '<li>marca: ' + producto.marca + '</li>';
                     descripcion += '<li>detalles: ' + producto.detalles + '</li>';
+                    descripcion += '<li>imagen: ' + producto.imagen + '</li>';
                     
                     template += `
-                        <tr productId="${producto.id}">
+                        <tr productId="${producto.id}" class="product-item" style="cursor: pointer;">
                             <td>${producto.id}</td>
                             <td>${producto.nombre}</td>
                             <td><ul>${descripcion}</ul></td>
                             <td>
-                                <button class="product-edit btn btn-warning btn-sm">
-                                    Editar
-                                </button>
                                 <button class="product-delete btn btn-danger btn-sm">
                                     Eliminar
                                 </button>
@@ -148,16 +340,14 @@ function buscarProducto() {
                     descripcion += '<li>modelo: ' + producto.modelo + '</li>';
                     descripcion += '<li>marca: ' + producto.marca + '</li>';
                     descripcion += '<li>detalles: ' + producto.detalles + '</li>';
+                    descripcion += '<li>imagen: ' + producto.imagen + '</li>';
                     
                     template += `
-                        <tr productId="${producto.id}">
+                        <tr productId="${producto.id}" class="product-item" style="cursor: pointer;">
                             <td>${producto.id}</td>
                             <td>${producto.nombre}</td>
                             <td><ul>${descripcion}</ul></td>
                             <td>
-                                <button class="product-edit btn btn-warning btn-sm">
-                                    Editar
-                                </button>
                                 <button class="product-delete btn btn-danger btn-sm">
                                     Eliminar
                                 </button>
@@ -168,7 +358,6 @@ function buscarProducto() {
                     template_bar += `<li>${producto.nombre}</li>`;
                 });
                 
-                // Mostrar barra de estado
                 $('#product-result').removeClass('d-none');
                 $('#container').html(template_bar);
                 $('#products').html(template);
@@ -179,78 +368,64 @@ function buscarProducto() {
 
 // AGREGAR O ACTUALIZAR PRODUCTO
 function agregarProducto() {
-    let productoJsonString = $('#description').val();
-    let finalJSON = JSON.parse(productoJsonString);
-    finalJSON['nombre'] = $('#name').val();
     let productId = $('#productId').val();
     
-    // VALIDACIONES
-    let errores = [];
+    let finalJSON = {
+        nombre: $('#name').val().trim(),
+        marca: $('#marca').val(),
+        modelo: $('#modelo').val().trim(),
+        precio: parseFloat($('#precio').val()),
+        detalles: $('#detalles').val().trim(),
+        unidades: parseInt($('#unidades').val()),
+        imagen: $('#imagen').val().trim() || 'img/default.png'
+    };
     
-    if (!finalJSON.nombre || finalJSON.nombre.trim() === '' || finalJSON.nombre.length > 100) {
-        errores.push('El nombre es requerido y debe tener 100 caracteres o menos');
-    }
-    
-    if (!finalJSON.marca || finalJSON.marca.trim() === '' || finalJSON.marca === 'NA') {
-        errores.push('La marca es requerida');
-    }
-    
-    let alfanumerico = /^[a-zA-Z0-9\s\-]+$/;
-    if (!finalJSON.modelo || finalJSON.modelo === 'XX-000' || !alfanumerico.test(finalJSON.modelo) || finalJSON.modelo.length > 25) {
-        errores.push('El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos');
-    }
-    
-    if (!finalJSON.precio || parseFloat(finalJSON.precio) <= 99.99) {
-        errores.push('El precio es requerido y debe ser mayor a 99.99');
-    }
-    
-    if (finalJSON.detalles && finalJSON.detalles !== 'NA' && finalJSON.detalles.length > 250) {
-        errores.push('Los detalles deben tener 250 caracteres o menos');
-    }
-    
-    if (finalJSON.unidades === undefined || parseInt(finalJSON.unidades) < 0) {
-        errores.push('Las unidades son requeridas y deben ser mayor o igual a 0');
-    }
-    
-    if (!finalJSON.imagen || finalJSON.imagen.trim() === '') {
-        finalJSON.imagen = 'img/default.png';
-    }
-    
-    if (errores.length > 0) {
-        alert('Errores de validación:\n\n' + errores.join('\n'));
-        return;
-    }
-    
-    // Si hay productId, es una edición
     if(productId) {
         finalJSON['id'] = productId;
     }
     
     let url = productId ? './backend/product-edit.php' : './backend/product-add.php';
     
+    console.log('Enviando datos:', finalJSON);
+    console.log('URL:', url);
+    
     $.ajax({
         url: url,
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(finalJSON),
+        beforeSend: function() {
+            console.log('Enviando solicitud...');
+        },
         success: function(response) {
-            let respuesta = JSON.parse(response);
-            let template_bar = `
-                <li style="list-style: none;">status: ${respuesta.status}</li>
-                <li style="list-style: none;">message: ${respuesta.message}</li>
-            `;
-            
-            $('#product-result').removeClass('d-none');
-            $('#container').html(template_bar);
-            
-            // Limpiar formulario
-            $('#product-form').trigger('reset');
-            $('#productId').val('');
-            $('#product-form button[type="submit"]').text('Agregar Producto');
-            init();
-            
-            // Listar productos actualizados
-            listarProductos();
+            console.log('Respuesta recibida:', response);
+            try {
+                let respuesta = JSON.parse(response);
+                let template_bar = `
+                    <li style="list-style: none;">status: ${respuesta.status}</li>
+                    <li style="list-style: none;">message: ${respuesta.message}</li>
+                `;
+                
+                $('#product-result').removeClass('d-none');
+                $('#container').html(template_bar);
+                
+                // Limpiar formulario
+                $('#product-form').trigger('reset');
+                $('#productId').val('');
+                $('.validation-message').text('');
+                $('.form-control').removeClass('is-valid is-invalid');
+                
+                // Listar productos actualizados
+                listarProductos();
+            } catch(e) {
+                console.error('Error al parsear JSON:', e);
+                alert('Error al procesar la respuesta del servidor');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error AJAX:', status, error);
+            console.error('Respuesta del servidor:', xhr.responseText);
+            alert('Error al conectar con el servidor: ' + error);
         }
     });
 }
@@ -271,7 +446,6 @@ function eliminarProducto(id) {
             $('#product-result').removeClass('d-none');
             $('#container').html(template_bar);
             
-            // Listar productos actualizados
             listarProductos();
         }
     });
