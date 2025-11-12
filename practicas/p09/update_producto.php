@@ -1,6 +1,6 @@
 <?php
 /* MySQL Conexión */
-$link = mysqli_connect("localhost", "root", "Dyrco_CRA13", "marketzone");
+@$link = new mysqli('localhost', 'root', '', 'marketzone');
 
 // Chequea conexión
 if($link === false){

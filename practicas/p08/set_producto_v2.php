@@ -11,7 +11,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <body>
 <?php
 // Conexión a la BD
-@$link = new mysqli('localhost', 'root', 'Dyrco_CRA13', 'marketzone');
+@$link = new mysqli('localhost', 'root', '', 'marketzone');
 
 if ($link->connect_errno) {
     die('<h3>❌ Falló la conexión: ' . $link->connect_error . '</h3>');

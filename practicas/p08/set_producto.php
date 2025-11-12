@@ -8,7 +8,8 @@ $unidades = 1;
 $imagen   = 'img/imagen.png';
 
 /** SE CREA EL OBJETO DE CONEXION */
-@$link = new mysqli('localhost', 'root', 'Dyrco_CRA13', 'marketzone');	
+@$link = new mysqli('localhost', 'root', '', 'marketzone');
+	
 
 /** comprobar la conexión */
 if ($link->connect_errno) 

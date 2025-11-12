@@ -5,7 +5,8 @@
     $data = array();
 
     /** Crear el objeto de conexión */
-    @$link = new mysqli('localhost', 'root', 'Dyrco_CRA13', 'marketzone');
+    $link = new mysqli('localhost', 'root', '', 'marketzone');
+
 
     /** Comprobar la conexión */
     if ($link->connect_errno) {

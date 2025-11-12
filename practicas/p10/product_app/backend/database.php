@@ -1,15 +1,12 @@
 <?php
-    $conexion = @mysqli_connect(
-        'localhost',
-        'root',
-        'Dyrco_CRA13',
-        'marketzone'
-    );
+$conexion = @mysqli_connect(
+    'localhost', // Servidor
+    'root',      // Usuario por defecto de XAMPP
+    '',          // Sin contraseña
+    'marketzone' // Nombre de la base
+);
 
-    /**
-     * NOTA: si la conexión falló $conexion contendrá false
-     **/
-    if(!$conexion) {
-        die('¡Base de datos NO conextada!');
-    }
+if (!$conexion) {
+    die('¡Base de datos NO conectada!');
+}
 ?>
