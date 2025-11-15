@@ -1,8 +1,10 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
+// Usar autoload de Composer
+require_once __DIR__ . '/../vendor/autoload.php';
+
 use TECWEB\MYAPI\Products;
-require_once __DIR__ . '/myapi/Products.php';
 
 $productos = new Products('marketzone');
 $productos->list();

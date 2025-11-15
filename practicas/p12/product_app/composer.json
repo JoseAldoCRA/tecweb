@@ -1,0 +1,19 @@
+{
+    "name": "josealdo/product-app",
+    "description": "Aplicación de gestión de productos con Composer",
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "TECWEB\\MYAPI\\": "backend/myapi/"
+        }
+    },
+    "authors": [
+        {
+            "name": "José Aldo Flores Salas",
+            "email": "josealdof25@gamil.com"
+        }
+    ]
+}
