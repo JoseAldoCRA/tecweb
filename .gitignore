@@ -28,3 +28,8 @@ Homestead.json
 .env.production
 .phpactor.json
 auth.json
+
+
+# Ignorar dependencias de la práctica 13
+practicas/p13/vendor/
+practicas/p13/composer.lock
